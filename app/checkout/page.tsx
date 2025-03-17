@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -57,6 +57,64 @@ function CheckoutForm({ planId }: { planId: string }) {
   const [formError, setFormError] = useState<string | null>(null);
   const router = useRouter();
   
+  // Discount code state
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountMessage, setDiscountMessage] = useState<{type: 'success'|'error', message: string} | null>(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
+  
+  // Calculate final price
+  const originalPrice = plan.price;
+  const finalPrice = originalPrice - discountAmount;
+  
+  // Available discount codes (in a real app, this would be on the server)
+  const availableDiscounts = {
+    'LAUNCH25': { type: 'percentage', value: 25 },
+    'SAVE50': { type: 'percentage', value: 50 },
+    'HOLIDAY10': { type: 'flat', value: 10 },
+    'WELCOME': { type: 'percentage', value: 15 },
+  };
+  
+  // Handle discount code application
+  const applyDiscountCode = async () => {
+    if (!discountCode.trim()) {
+      setDiscountMessage({ type: 'error', message: 'Please enter a discount code' });
+      return;
+    }
+    
+    setIsApplyingDiscount(true);
+    setDiscountMessage(null);
+    
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const normalizedCode = discountCode.trim().toUpperCase();
+      const discount = availableDiscounts[normalizedCode as keyof typeof availableDiscounts];
+      
+      if (discount) {
+        let amount = 0;
+        if (discount.type === 'percentage') {
+          amount = Math.round(originalPrice * (discount.value / 100));
+        } else {
+          amount = discount.value;
+        }
+        
+        setDiscountAmount(amount);
+        setDiscountMessage({ 
+          type: 'success', 
+          message: `Discount applied: ${discount.type === 'percentage' ? `${discount.value}%` : `$${discount.value}`} off` 
+        });
+      } else {
+        setDiscountMessage({ type: 'error', message: 'Invalid discount code' });
+      }
+    } catch (error) {
+      setDiscountMessage({ type: 'error', message: 'Error applying discount' });
+    } finally {
+      setIsApplyingDiscount(false);
+    }
+  };
+  
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -70,6 +128,9 @@ function CheckoutForm({ planId }: { planId: string }) {
       email: formData.get('email') as string,
       companyName: formData.get('companyName') as string || undefined,
       paymentMethod: formData.get('paymentMethod') as 'card' | 'paypal',
+      discountCode: discountCode || undefined,
+      discountAmount: discountAmount > 0 ? discountAmount : undefined,
+      finalPrice
     };
     
     try {
@@ -87,6 +148,9 @@ function CheckoutForm({ planId }: { planId: string }) {
       //   const error = await response.json();
       //   throw new Error(error.message || 'Failed to process payment');
       // }
+      
+      // Simulate a successful payment process
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Redirect to success page
       router.push('/checkout/success');
@@ -149,6 +213,40 @@ function CheckoutForm({ planId }: { planId: string }) {
               />
             </div>
             
+            {/* Discount Code */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Discount Code</span>
+              </label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  placeholder="Enter code" 
+                  className="input input-bordered flex-1" 
+                />
+                <button 
+                  type="button" 
+                  onClick={applyDiscountCode}
+                  disabled={isApplyingDiscount}
+                  className="btn btn-outline"
+                >
+                  {isApplyingDiscount ? (
+                    <>
+                      <span className="loading loading-spinner loading-xs"></span>
+                      Applying...
+                    </>
+                  ) : 'Apply'}
+                </button>
+              </div>
+              {discountMessage && (
+                <div className={`text-sm mt-1 ${discountMessage.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                  {discountMessage.message}
+                </div>
+              )}
+            </div>
+            
             <h3 className="text-xl font-semibold mt-8 mb-4">Payment Information</h3>
             
             <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg mb-4">
@@ -206,7 +304,7 @@ function CheckoutForm({ planId }: { planId: string }) {
                     Processing...
                   </>
                 ) : (
-                  'Complete Purchase'
+                  `Complete Purchase - $${finalPrice}`
                 )}
               </button>
             </div>
@@ -218,9 +316,28 @@ function CheckoutForm({ planId }: { planId: string }) {
         <div className="card bg-base-100 shadow-xl border border-gray-100 dark:border-gray-800 sticky top-24">
           <div className="card-body">
             <h2 className="card-title text-2xl font-bold">{plan.name} License</h2>
-            <div className="my-4">
-              <span className="text-3xl font-bold">${plan.price}</span>
-              <span className="text-gray-500 ml-1">/ one-time</span>
+            
+            {/* Order Summary */}
+            <div className="my-4 space-y-2">
+              <div className="flex justify-between items-center">
+                <span>Original Price:</span>
+                <span className={discountAmount > 0 ? "line-through text-gray-500" : "font-semibold"}>
+                  ${originalPrice}
+                </span>
+              </div>
+              
+              {discountAmount > 0 && (
+                <>
+                  <div className="flex justify-between items-center text-green-500">
+                    <span>Discount:</span>
+                    <span>-${discountAmount}</span>
+                  </div>
+                  <div className="flex justify-between items-center font-semibold text-lg pt-2 border-t">
+                    <span>Final Price:</span>
+                    <span>${finalPrice}</span>
+                  </div>
+                </>
+              )}
             </div>
             
             <div className="divider"></div>
@@ -256,6 +373,23 @@ function CheckoutForm({ planId }: { planId: string }) {
               <Link href="/pricing" className="btn btn-outline btn-sm">
                 View All Plans
               </Link>
+            </div>
+            
+            {/* Testimonials */}
+            <div className="mt-6 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">What Our Customers Say</h3>
+              <div className="text-sm italic text-gray-600 dark:text-gray-300">
+                "This boilerplate saved me weeks of development time. The codebase is clean, well-structured, and easy to customize."
+                <div className="mt-2 font-medium not-italic">- Sarah K., Lead Developer</div>
+              </div>
+            </div>
+            
+            {/* Money Back Guarantee */}
+            <div className="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-300">
+              <svg className="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+              <span>30-day money-back guarantee</span>
             </div>
           </div>
         </div>

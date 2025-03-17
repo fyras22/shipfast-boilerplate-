@@ -1,105 +1,116 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+import { CheckCircle2 } from 'lucide-react';
+import LicenseKeyDisplay from '@/app/components/LicenseKeyDisplay';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Order Confirmation | ShipFast Boilerplate',
-  description: 'Your ShipFast Boilerplate purchase has been confirmed',
+  description: 'Thank you for your purchase of the ShipFast Boilerplate.',
 };
+
+// Mock function to simulate fetching order details
+function getOrderDetails() {
+  // In a real app, this would fetch from a database based on order ID from the URL
+  return {
+    id: 'ord_' + Math.random().toString(36).substring(2, 10),
+    planId: 'professional',
+    planName: 'Professional License',
+    amount: 149,
+    currency: 'USD',
+    email: 'customer@example.com',
+    date: new Date().toISOString(),
+    paymentMethod: 'card',
+    licenseKey: 'SHIPPROFESSIONAL12345678',
+    purchaseDate: new Date().toISOString(),
+    expiryDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
+  };
+}
+
+function PurchaseSuccessContent() {
+  const order = getOrderDetails();
+  
+  return (
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="text-center mb-8">
+        <div className="flex justify-center mb-4">
+          <CheckCircle2 className="h-16 w-16 text-green-500" />
+        </div>
+        <h1 className="text-3xl font-bold mb-2">Thank You for Your Purchase!</h1>
+        <p className="text-gray-600 dark:text-gray-400">
+          Your order has been successfully processed.
+        </p>
+      </div>
+      
+      <LicenseKeyDisplay 
+        licenseKey={order.licenseKey}
+        planName={order.planName}
+        purchaseDate={order.purchaseDate}
+        expiryDate={order.expiryDate}
+      />
+      
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Order Summary</h3>
+        
+        <div className="space-y-3">
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Order ID</span>
+            <span className="font-medium">{order.id}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Product</span>
+            <span className="font-medium">ShipFast Boilerplate - {order.planName}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Amount</span>
+            <span className="font-medium">${order.amount.toFixed(2)} {order.currency}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Date</span>
+            <span className="font-medium">{new Date(order.date).toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Payment Method</span>
+            <span className="font-medium capitalize">{order.paymentMethod}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600 dark:text-gray-400">Email</span>
+            <span className="font-medium">{order.email}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-center space-y-4">
+        <p className="text-gray-600 dark:text-gray-400">
+          A receipt has been sent to your email address. You can also access your license and
+          downloads from your dashboard at any time.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Link
+            href="/dashboard"
+            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Go to Dashboard
+          </Link>
+          <Link
+            href="/"
+            className="px-6 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-lg transition-colors"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function SuccessPage() {
   return (
-    <div className="layout-wrapper">
-      <main className="layout-main">
-        <section className="py-12">
-          <div className="container-custom max-w-3xl">
-            <div className="card bg-base-100 shadow-xl border border-gray-100 dark:border-gray-800">
-              <div className="card-body">
-                <div className="flex justify-center mb-6">
-                  <div className="rounded-full bg-green-100 p-4">
-                    <svg 
-                      className="w-10 h-10 text-green-500" 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path 
-                        fillRule="evenodd" 
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" 
-                        clipRule="evenodd" 
-                      />
-                    </svg>
-                  </div>
-                </div>
-                
-                <h1 className="text-3xl font-bold text-center mb-4">Thank You for Your Purchase!</h1>
-                
-                <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
-                  Your order has been successfully processed. You should receive an email with your order details shortly.
-                </p>
-                
-                <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">Order ID:</span>
-                      <span className="font-medium">ORD-1234567890</span>
-                    </div>
-                    
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">License:</span>
-                      <span className="font-medium">Professional License</span>
-                    </div>
-                    
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">Amount:</span>
-                      <span className="font-medium">$149.00 USD</span>
-                    </div>
-                    
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">Date:</span>
-                      <span className="font-medium">{new Date().toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Next Steps</h2>
-                  
-                  <ol className="space-y-4 list-decimal list-inside">
-                    <li className="text-gray-600 dark:text-gray-300">
-                      <span className="font-medium">Check your email</span> - We've sent your receipt and license details to your provided email address.
-                    </li>
-                    <li className="text-gray-600 dark:text-gray-300">
-                      <span className="font-medium">Download the boilerplate</span> - Use the link in your email to download the ShipFast Boilerplate.
-                    </li>
-                    <li className="text-gray-600 dark:text-gray-300">
-                      <span className="font-medium">Access the private repository</span> - You'll receive an invitation to the private GitHub repository where you can access updates.
-                    </li>
-                    <li className="text-gray-600 dark:text-gray-300">
-                      <span className="font-medium">Read the documentation</span> - Refer to the documentation to get started with your new boilerplate.
-                    </li>
-                  </ol>
-                </div>
-                
-                <div className="text-center">
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    If you don't receive your email within 15 minutes, please check your spam folder or contact our support team.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/" className="btn btn-primary">
-                      Return to Home
-                    </Link>
-                    <Link href="/contact" className="btn btn-outline">
-                      Contact Support
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+    <main className="flex flex-col items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+      <Suspense fallback={<div>Loading order details...</div>}>
+        <PurchaseSuccessContent />
+      </Suspense>
+    </main>
   );
 } 
