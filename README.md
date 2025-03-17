@@ -30,8 +30,8 @@ A high-performance, production-ready Next.js 14 boilerplate with App Router, Mon
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/shipfast-boilerplate.git
-cd shipfast-boilerplate
+git clone https://github.com/fyras22/shipfast-boilerplate-.git
+cd shipfast-boilerplate-
 ```
 
 2. Install dependencies:
@@ -137,11 +137,11 @@ This boilerplate is optimized for deployment on [Vercel](https://vercel.com/), b
 
 ### Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fshipfast-boilerplate)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ffyras22%2Fshipfast-boilerplate-)
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request to our [GitHub repository](https://github.com/fyras22/shipfast-boilerplate-).
 
 ## License
 

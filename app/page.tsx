@@ -81,7 +81,7 @@ export default function HomePage() {
                 Get Started
               </Link>
               <Link 
-                href="https://github.com/yourusername/shipfast-boilerplate" 
+                href="https://github.com/fyras22/shipfast-boilerplate-" 
                 className="btn btn-outline btn-lg"
               >
                 GitHub
@@ -165,7 +165,7 @@ export default function HomePage() {
             <p className="text-fluid-1 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               Get started with ShipFast and focus on building your product, not your infrastructure.
             </p>
-            <Link href="https://github.com/yourusername/shipfast-boilerplate" className="btn btn-primary btn-lg">
+            <Link href="https://github.com/fyras22/shipfast-boilerplate-" className="btn btn-primary btn-lg">
               Star on GitHub
             </Link>
           </div>
@@ -188,7 +188,7 @@ export default function HomePage() {
               <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
                 Privacy
               </a>
-              <a href="https://github.com/yourusername/shipfast-boilerplate" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
+              <a href="https://github.com/fyras22/shipfast-boilerplate-" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
                 GitHub
               </a>
             </div>
