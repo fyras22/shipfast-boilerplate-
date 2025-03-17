@@ -1,0 +1,16 @@
+{
+  "name": "ShipFast Boilerplate",
+  "short_name": "ShipFast",
+  "description": "High-performance Next.js 14 boilerplate with App Router, MongoDB, NextAuth, and TypeScript.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "theme_color": "#0ea5e9",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}
