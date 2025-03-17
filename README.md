@@ -4,6 +4,16 @@ A high-performance, production-ready Next.js 14 boilerplate with App Router, Mon
 
 ![ShipFast Boilerplate](https://via.placeholder.com/1200x630/0ea5e9/FFFFFF?text=ShipFast+Boilerplate)
 
+## Commercial License
+
+**This is a premium commercial boilerplate.** To use ShipFast Boilerplate in your projects, you need to [purchase a license](https://yourwebsite.com/pricing). Available options:
+
+- **Personal License**: $49 (single project, 6 months of updates)
+- **Professional License**: $149 (unlimited projects, 1 year of updates)
+- **Enterprise License**: $499 (unlimited projects, lifetime updates, priority support)
+
+For detailed license terms, please see our [License Terms](https://yourwebsite.com/terms).
+
 ## Features
 
 - ⚡ **Next.js 14+** with App Router for optimal performance
@@ -139,13 +149,17 @@ This boilerplate is optimized for deployment on [Vercel](https://vercel.com/), b
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ffyras22%2Fshipfast-boilerplate-)
 
-## Contributing
+## Support
 
-Contributions are welcome! Please feel free to submit a Pull Request to our [GitHub repository](https://github.com/fyras22/shipfast-boilerplate-).
+For support, please use one of the following channels based on your license tier:
+
+- **Personal License**: Use our [GitHub Issues](https://github.com/fyras22/shipfast-boilerplate-/issues) for community support
+- **Professional License**: Email support at support@shipfast-boilerplate.com
+- **Enterprise License**: Priority support via your dedicated contact
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This boilerplate is licensed under a commercial license. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 

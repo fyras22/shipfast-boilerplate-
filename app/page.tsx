@@ -75,10 +75,10 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center mb-12">
               <Link 
-                href="#features" 
+                href="/pricing" 
                 className="btn btn-primary btn-lg"
               >
-                Get Started
+                View Pricing
               </Link>
               <Link 
                 href="https://github.com/fyras22/shipfast-boilerplate-" 
@@ -158,16 +158,75 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Pricing Section Preview */}
         <section className="bg-primary-50 dark:bg-primary-900/20 py-16">
+          <div className="container-custom text-center">
+            <h2 className="text-fluid-3 font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-fluid-1 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+              Choose the license that suits your needs
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* Basic plan summary */}
+              <div className="card bg-base-100 shadow-lg border border-gray-100 dark:border-gray-800">
+                <div className="card-body text-center">
+                  <h3 className="text-xl font-bold">Personal</h3>
+                  <p className="text-3xl font-bold mt-2 mb-1">$49</p>
+                  <p className="text-sm text-gray-500 mb-4">one-time payment</p>
+                  <p className="text-sm mb-6">For individual developers</p>
+                  <Link href="/pricing" className="btn btn-sm btn-outline w-full">Learn More</Link>
+                </div>
+              </div>
+              
+              {/* Pro plan summary */}
+              <div className="card bg-base-100 shadow-lg border-2 border-primary-500 relative">
+                <div className="absolute top-0 right-0 bg-primary-500 text-white py-1 px-3 text-xs font-medium rounded-bl-lg rounded-tr-lg">
+                  POPULAR
+                </div>
+                <div className="card-body text-center">
+                  <h3 className="text-xl font-bold">Professional</h3>
+                  <p className="text-3xl font-bold mt-2 mb-1">$149</p>
+                  <p className="text-sm text-gray-500 mb-4">one-time payment</p>
+                  <p className="text-sm mb-6">For professional developers</p>
+                  <Link href="/pricing" className="btn btn-sm btn-primary w-full">Learn More</Link>
+                </div>
+              </div>
+              
+              {/* Enterprise plan summary */}
+              <div className="card bg-base-100 shadow-lg border border-gray-100 dark:border-gray-800">
+                <div className="card-body text-center">
+                  <h3 className="text-xl font-bold">Enterprise</h3>
+                  <p className="text-3xl font-bold mt-2 mb-1">$499</p>
+                  <p className="text-sm text-gray-500 mb-4">one-time payment</p>
+                  <p className="text-sm mb-6">For agencies & teams</p>
+                  <Link href="/pricing" className="btn btn-sm btn-outline w-full">Learn More</Link>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8">
+              <Link href="/pricing" className="btn btn-primary">
+                View Full Pricing Details
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16">
           <div className="container-custom text-center">
             <h2 className="text-fluid-3 font-bold mb-4">Ready to Ship Faster?</h2>
             <p className="text-fluid-1 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               Get started with ShipFast and focus on building your product, not your infrastructure.
             </p>
-            <Link href="https://github.com/fyras22/shipfast-boilerplate-" className="btn btn-primary btn-lg">
-              Star on GitHub
-            </Link>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/pricing" className="btn btn-primary btn-lg">
+                Purchase a License
+              </Link>
+              <Link href="/contact" className="btn btn-outline btn-lg">
+                Contact Us
+              </Link>
+            </div>
           </div>
         </section>
       </main>
@@ -182,12 +241,12 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
+              <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
                 Terms
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
-                Privacy
-              </a>
+              </Link>
+              <Link href="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
+                Pricing
+              </Link>
               <a href="https://github.com/fyras22/shipfast-boilerplate-" className="text-gray-600 dark:text-gray-400 hover:text-primary-500">
                 GitHub
               </a>
